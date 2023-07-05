@@ -41,7 +41,3 @@ The Indoor Positioning project has practical implications and potential applicat
 -   **Security and Emergency Response:** Indoor positioning can enhance security measures and aid emergency response teams by providing real-time location information during critical situations.
 
 By showcasing the Indoor Positioning project, you can demonstrate your ability to apply machine learning techniques to solve real-world problems and highlight the potential impact of indoor positioning in various industries.
-
-## Contributing
-
-Contributions to the Indoor Positioning project are welcome! If you would like to
