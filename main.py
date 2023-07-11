@@ -110,7 +110,7 @@ async def add_device (device_data: dict):
     a valid post looks like this
     device_data = {
                     "MAC_Address": "AA:BB:CC:DD:EE:FF",
-                    "name": "Sensor Name",
+                    "name": "Device Name",
                     }
     """
     # print the recieved Command for Debugging
@@ -170,7 +170,7 @@ async def get_sensor_data (mac_address: str):
     """Gets the Sensor Data from a Sensor"""
     # print the requested Command
     print('Requested Sensor Data')
-    return {[ips.get_Device(mac_address).get_sensors()]}
+    return {ips.get_Device(mac_address).get_sensors()}
 
 
 
