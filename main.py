@@ -137,6 +137,7 @@ async def delete_device (mac_address: str):
             return "200"
         return "300"
     except:
+        pass
         "400"
 
 @app.get("/Devices/get_sensor_data/{mac_address}")

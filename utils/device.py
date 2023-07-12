@@ -37,7 +37,7 @@ class Device:
     
     def predict_room(self) -> str:
         """predicts the current Room based on the current Sensor Data"""
-
+        print("main.py-predict_room()/IndoorPositioning.py-get_current_Room()/device.py-predict_room()\n", self.Sensors)
         RoomID = predict_room(self.Sensors)
         self.current_Room = self.roomnames.get(str(RoomID))
 
