@@ -5,13 +5,16 @@ import json
 
 class Device:
 
-    def __init__ (self, MAC_Address: str):
+    def __init__ (self, MAC_Address: str, Sensors: dict = {}):
         
         self.mac_address = MAC_Address
 
+        self.current_Room = None
+
         self.name = ''.join(random.choice(string.ascii_uppercase) for _ in range(6)) + ' ' + ''.join(random.choice(string.ascii_uppercase) for _ in range(6))
 
-        self.Sensors = {}
+        # the IPS can hand over a list of Sensors which are currently active //neccessary since the classifier needs a fixed size
+        self.Sensors = Sensors      # {Sensor ID: 0}
 
         with open("Config.json", mode="r") as f:
             config = json.load(f)

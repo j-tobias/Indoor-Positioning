@@ -85,7 +85,6 @@ async def get_Devices_list ():
     print(20*'-')
     return Devices_data
 
-
 @app.get("/Devices/get_Device_by_mac_address/{mac_address}")
 async def get_Device (mac_address: str):
     """ 
@@ -101,29 +100,6 @@ async def get_Device (mac_address: str):
         return {'error': 'Device not found'}
     else:
         return {'Device': device.__dict__}
-
-
-@app.post("/Devices/add_device/")
-async def add_device (device_data: dict):
-    """
-    Adds a new Device to the IPS - remember: newly found MAC Addresses are automatically added as Device
-    a valid post looks like this
-    device_data = {
-                    "MAC_Address": "AA:BB:CC:DD:EE:FF",
-                    "name": "Device Name",
-                    }
-    """
-    # print the recieved Command for Debugging
-    print('Requested Device Adding ...')
-    try:
-        # add device to RoomControl
-        ips.add_Device(device_data.get('MAC_Address'))
-        ips.get_Device(device_data.get('MAC_Address')).set_name(device_data.get('name'))
-        # return success
-        return "200"
-    except:
-        return "400"
-
 
 @app.post("/Devices/update_device_name/")
 async def update_device_name (device_data: dict):
@@ -146,7 +122,6 @@ async def update_device_name (device_data: dict):
     except:
         return "400"
 
-
 @app.get("/Devices/delete_device/{mac_address}")
 async def delete_device (mac_address: str):
     """Deletes a Device from the Devices list
@@ -163,7 +138,6 @@ async def delete_device (mac_address: str):
         return "300"
     except:
         "400"
-
 
 @app.get("/Devices/get_sensor_data/{mac_address}")
 async def get_sensor_data (mac_address: str):
