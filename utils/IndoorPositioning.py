@@ -1,11 +1,16 @@
 from utils.device import Device
+import json
 
 class IPS:
     pass
 
     def __init__ (self):
         self.devices = {}       # {MAC Address: Device Object}
-        self.Sensors = {}       # {Sensor ID: 0}
+
+        with open("Config.json", mode="r") as f:
+            config = json.load(f)
+
+        self.Sensors = config.get("Sensors")       # {Sensor ID: 0}
 
     def get_current_Room (self, mac_address) -> str:
         """
@@ -17,38 +22,43 @@ class IPS:
         return device.current_Room
         
     def update_Device (self, mac_address, Sensor, Rssi):
+        """
+        Updates the RSSI value of a Device for the given Sensor | creates a new Device if MAC Address hasn't been registered yet
+        - mac_address: MAC Address of the respective Device -> AA:BB:CC:DD:EE:FF
+        - Sensor: SensorID of the respective Sensor -> s001
+        - RSSI: rssi value -> 12.4564
+        """
+        #get the Device
         device = self.get_Device(mac_address)
-        if device == False:
-            self.Sensors.update({Sensor: 0})
-            device = Device(mac_address, self.Sensors)
-            device.update_sensor(Sensor, Rssi)
+        #update the RSSI value for the Sensor
         device.update_sensor(Sensor, Rssi)
-        return True
+
         
     def get_Device (self, mac_address) -> Device:
         """
-        returns the device with the given MAC Address
+        returns the device with the given MAC Address if None found it creates an Object and adds it
         """
+        # get the Device
         device = self.devices.get(mac_address)
+        # check if a device was found
         if device == None:
+            # create a new Device and add it
+            device = self.add_Device(mac_address)
             print("No Device with the given MAC Address")
-            return False
-        else:
-            return device
+
+        return device
 
     def add_Device (self, mac_address) -> bool:
         """
         adds a Device object to the System
         """
         #create the Object
-        device = Device(mac_address)
+        device = Device(mac_address, self.Sensors)
 
-        #try to add it to the dict -> used try in case of key Error
-        try:
-            self.devices.update({mac_address:device})
-            return True
-        except:
-            return False
+        #add it to the dict
+        self.devices.update({mac_address:device})
+
+        return device
 
     def delete_Device (self, mac_address) -> bool:
         """
