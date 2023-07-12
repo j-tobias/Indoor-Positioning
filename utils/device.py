@@ -22,15 +22,15 @@ class Device:
 
     def update_sensor (self, Sensor: str, Rssi: float):
         """
-        This Method adds one sample to the DataFrame
+        This Method updates the RSSI value int the sensors dict
         """
-        Sensor = self.Sensors.get(Sensor)
+        print("Sensor:",Sensor, " Rssi:",Rssi)
 
-        if Sensor == None:
-            self.Sensors.update({Sensor: Rssi})
+        self.Sensors.update({Sensor: Rssi})
+        
+        if self.Sensors.get(Sensor) == None:
             print("New Sensor added")
-        else:
-            self.Sensors[Sensor] = Rssi
+
 
     def get_sensors (self):
         return [self.Sensors[key] for key in self.Sensors.keys()]
