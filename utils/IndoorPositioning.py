@@ -16,10 +16,10 @@ class IPS:
         """
         returns the Room name of the Room the Device is currently in
         """
+        #get the device
         device = self.get_Device(mac_address)
-        if device == False:
-            return device
-        return device.current_Room
+
+        return device.predict_room()
         
     def update_Device (self, mac_address, Sensor, Rssi):
         """
