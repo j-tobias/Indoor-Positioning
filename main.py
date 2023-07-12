@@ -43,7 +43,7 @@ async def recieve_scan(data: dict):
     # update the Device (where the Device corresponds to a User which is tracked)
     ips.update_Device(mac_address, Sensor, Rssi)
 
-    return {'response': 200}
+    return {"status":200}
 
 @app.get("/predict_room/{mac_address}")
 async def predict_room_ (mac_address: str):
@@ -118,9 +118,9 @@ async def update_device_name (device_data: dict):
         #update the name to the given value
         device.set_name(device_data.get("new_name"))
         # return success
-        return "200"
+        return {"status":200}
     except:
-        return "400"
+        return {"status":400}
 
 @app.get("/Devices/delete_device/{mac_address}")
 async def delete_device (mac_address: str):
@@ -134,11 +134,10 @@ async def delete_device (mac_address: str):
         #delete device
         _ = ips.delete_Device(mac_address)
         if _:
-            return "200"
-        return "300"
+            return {"status":200}
+        return {"status":300}
     except:
-        pass
-        "400"
+        return {"status":400}
 
 @app.get("/Devices/get_sensor_data/{mac_address}")
 async def get_sensor_data (mac_address: str):
@@ -151,12 +150,14 @@ async def get_sensor_data (mac_address: str):
 
 if __name__ == "__main__":
     import uvicorn
+    import json
 
-    ip = "10.220.9.82" #has to be configured
+    with open("Config.json", mode="r") as f:
+        config = json.load(f)
+
+    ip = config.get("Host IP")
     port_n = 5000
     
-
     ips = IPS()
     
-
     uvicorn.run(app, host=ip, port=port_n)
